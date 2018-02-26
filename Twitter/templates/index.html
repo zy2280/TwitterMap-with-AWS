@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        height: 500px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  
+  <body bgcolor="#222549">
+    <h3> <font color="white" size = 15> Real-Time Tweets </font> </h3>
+
+<form action="/Home" method='POST' name="text">
+
+    <div id="map"></div>
+
+    <!--pass data from python flask to html using JavaScript-->
+    <!--use Google Map API-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+
+     function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 3,
+          center: {'lat': 40.8075355, 'lng': -73.9625727},
+          
+          styles: [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ]
+        
+        });
+        
+        
+        var goldStar = {
+          path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+          fillColor: 'yellow',
+          fillOpacity: 0.8,
+          scale: 0.1,
+          strokeColor: 'gold',
+          strokeWeight: 8
+        };
+        
+    
+        var marker_u;
+     
+        function placeMarker(location) {
+        
+        if (marker_u){
+        	marker_u.setPosition(location);
+        	}else{
+    			marker_u = new google.maps.Marker({
+        		position: location,
+        		icon: goldStar, 
+        		map: map
+    		});
+    	}
+	};
+		
+		
+
+	google.maps.event.addListener(map, 'click', function(event) {
+   		placeMarker(event.latLng);
+   		document.getElementById('Lat').value = event.latLng.lat()
+        document.getElementById('Lng').value = event.latLng.lng()
+   	});
+   	    
+   	    
+   	    
+         
+    }
+   
+   
+
+    
+    
+
+    </script>
+    
+    
+    
+    
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqg9keyJjYcc1Fqsqo&callback=initMap">
+    </script>
+
+    <!--Add Selection Box-->
+ 
+    
+ <h3><font color="white"> Keyword Selection</font> </h3>
+    <select action="/Home" method="POST" name="text" style="height: 30px; width: 80px; border: 1px solid black" >
+  		<option value="python">Python </option>
+  		<option value="cloud">Cloud</option>
+  		<option value="computer">Computer</option>
+  		<option value="love">Love</option>
+  		<option value="hello">Hello</option>
+  		<option value="amazon">Amazon</option>
+  		<option value="computing">Computing</option>
+  		<option value="data">Data</option>
+  		<option value="new">New</option>
+  		<option value="app">App</option>
+<h2></h2>
+
+
+    <input type="hidden" id="Lat" name="Lat" value="">
+    <input type="hidden" id="Lng" name="Lng" value="">
+    
+<h2></h2>   
+  <h3><font color="white"> Distance Filter (km)</font> </h3>
+<input type="text" name="distance" value = 2000>
+<h2></h2>  
+<input class= "btn btn-primary btn-lg" type="submit" name="text" value="Submit" style="height: 30px; width: 80px; border: 1px solid black">
+</form>
+  		
+</select>
+  </body>
+</html>
